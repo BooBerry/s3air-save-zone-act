@@ -223,6 +223,7 @@ function bool fn00d458()
 			}
 		}
 
+		#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
 		string name = ECF_dataselect_getStr()
 		string id = ECF_dataselect_getNum()
 
@@ -232,6 +233,7 @@ function bool fn00d458()
 				playSound(0xb2)
 			return 2
 		}
+		#endif
 		
 		if (u16[A0 + 0x38] == 0 && objA0.value3b == 0)
 		{
@@ -266,8 +268,12 @@ function bool fn00d458()
 			}
 			else if (u16[A0 + 0x34] >= CHARS_KNUCKLES_ALONE)		// Originally this is only an equality check
 				D6 = 0x0b
-			else if (u16[A0 + 0x34] == CHARS_TAILS_ALONE || objA0.value3b < 2 || name && !ECF_visitsDoomsday(name))
+			else if (u16[A0 + 0x34] == CHARS_TAILS_ALONE || objA0.value3b < 2)
 				D6 = 0x0c
+			#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
+			else if
+			else if (u16[A0 + 0x34] == CHARS_TAILS_ALONE || objA0.value3b < 2 || name && !ECF_visitsDoomsday(name))
+			#endif
 			else
 				D6 = 0x0d
 			
@@ -280,9 +286,11 @@ function bool fn00d458()
 				if (D1.s16 < 0)
 					D1.u16 = D6.u16
 				
+				#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
 				// safety check for "corrupted" files
 				if (D1.u16 == 0xd && name && !ECF_visitsDoomsday(name))
 					--D1.u16
+				#endif
 			}
 			else if (control.pad1.pressed & CONTROL_UP)
 			{
@@ -426,10 +434,12 @@ function bool fn00d458()
 		global.zone_act = D0.u16
 		global.zone_act.apparent = D0.u16
 		levelselect.characters  = (u8[A1 + 0x02] >> 4)
+		#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
 		levelselect_ExChar_P1_id = id
 		if (name)
 			u8[A1 + 0x02] = getECFGlobalCharId(getECFCharNameAtId(levelselect_ExChar_P1_id)) << 4
 		//debugLog(u8[A1 + 0x02])
+		#endif
 		global.next_bluespheres = (u8[A1 + 0x02] & 0x0f)
 
 		D0 = u16[A1 + 0x06]
