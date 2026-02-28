@@ -272,6 +272,7 @@ function bool fn00d458()
 				D6 = 0x0c
 			#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
 			else if (u16[A0 + 0x34] == CHARS_TAILS_ALONE || objA0.value3b < 2 || name && !ECF_visitsDoomsday(name))
+				D6 = 0x0c
 			#endif
 			else
 				D6 = 0x0d
@@ -494,4 +495,3 @@ function bool fn00d458()
 		return 0
 	}
 }
-
